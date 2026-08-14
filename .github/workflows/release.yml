@@ -9,42 +9,23 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      # Checkout
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
-      # Install Node.js
-      - name: Install Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          registry-url: "https://registry.npmjs.org"
-
-        # Install pnpm
+      # Install pnpm（先装 pnpm，setup-node 的 cache: pnpm 依赖它）
       - name: Install pnpm
         uses: pnpm/action-setup@v4
-        id: pnpm-install
         with:
           version: 9
           run_install: false
 
-      # Get pnpm store directory
-      - name: Get pnpm store directory
-        id: pnpm-cache
-        shell: bash
-        run: |
-          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
-
-      # Setup pnpm cache
-      - name: Setup pnpm cache
-        uses: actions/cache@v4
+      # Install Node.js，内置 pnpm 缓存（自动处理 store 缓存，无需手动 cache 步骤）
+      - name: Install Node.js
+        uses: actions/setup-node@v5
         with:
-          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
+          node-version: 20
+          cache: pnpm
 
-      # Install dependencies
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
 
@@ -60,4 +41,3 @@ jobs:
           artifacts: "package.zip"
           token: ${{ secrets.GITHUB_TOKEN }}
           prerelease: true
-
