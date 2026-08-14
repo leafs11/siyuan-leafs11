@@ -1,0 +1,33 @@
+{
+  "name": "siyuan-leafs11",
+  "author": "leafs11",
+  "url": "https://github.com/leafs11/siyuan-leafs11",
+  "version": "1.0.0",
+  "minAppVersion": "2.10.14",
+  "disabledInPublish": true,
+  "backends": [
+    "all"
+  ],
+  "frontends": [
+    "all"
+  ],
+  "displayName": {
+    "default": "标签归档",
+    "en_US": "Tag Archive",
+    "zh_CN": "标签归档"
+  },
+  "description": {
+    "default": "标签归档、锁定管理",
+    "en_US": "Tag Archive & Lock Manager",
+    "zh_CN": "标签归档、锁定管理"
+  },
+  "readme": {
+    "default": "README.md",
+    "en_US": "README.md",
+    "zh_CN": "README_zh_CN.md"
+  },
+  "funding": {
+    "custom": []
+  },
+  "keywords": []
+}
