@@ -11,21 +11,21 @@ jobs:
     steps:
       # Checkout
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # Install Node.js
       - name: Install Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
           registry-url: "https://registry.npmjs.org"
 
         # Install pnpm
       - name: Install pnpm
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v4
         id: pnpm-install
         with:
-          version: 8
+          version: 9
           run_install: false
 
       # Get pnpm store directory
@@ -37,7 +37,7 @@ jobs:
 
       # Setup pnpm cache
       - name: Setup pnpm cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
@@ -46,7 +46,7 @@ jobs:
 
       # Install dependencies
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --no-frozen-lockfile
 
       # Build for production, 这一步会生成一个 package.zip
       - name: Build for production
@@ -60,3 +60,4 @@ jobs:
           artifacts: "package.zip"
           token: ${{ secrets.GITHUB_TOKEN }}
           prerelease: true
+
