@@ -12,6 +12,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
 
+      # 清理模板残留的 pnpm-workspace.yaml（占位符内容会让 pnpm 9 报 packages field missing）
+      - name: Remove template pnpm-workspace.yaml
+        run: rm -f pnpm-workspace.yaml
+
       # Install pnpm（先装 pnpm，setup-node 的 cache: pnpm 依赖它）
       - name: Install pnpm
         uses: pnpm/action-setup@v4
@@ -23,7 +27,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v5
         with:
-          node-version: 20
+          node-version: 22
           cache: pnpm
 
       - name: Install dependencies
